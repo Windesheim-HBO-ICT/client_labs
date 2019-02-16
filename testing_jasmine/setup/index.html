@@ -1,0 +1,52 @@
+<html>
+<head>
+<link rel="shortcut icon" type="image/png" href="jasmine/lib/jasmine/jasmine_favicon.png">
+<link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine/jasmine.css">
+
+<script type="text/javascript" src="jasmine/lib/jasmine/jasmine.js"></script>
+<script type="text/javascript" src="jasmine/lib/jasmine/jasmine-html.js"></script>
+<script type="text/javascript" src="jasmine/lib/jasmine/boot.js"></script>
+<script type="text/javascript" src="app.js"></script>
+
+</head>
+<body>
+
+<script>
+
+const showAlert = function(){
+    alert("Er is geklikt!")
+}
+
+const divide = function(a, b){
+    return a/b;
+}
+
+const throwError = function(){
+    throw Error('dit is een error')
+}
+
+
+describe("A suite", function() {
+  it("contains spec with an expectation", function() {
+    expect(true).toBe(true);
+  });
+});
+
+describe("An error catchen en testen", function () {
+    it("throw error should be catched", function () {
+        expect(function(){throwError()}).toThrow();
+    });
+});
+
+describe("Application initialisation", function() {
+  it("Method init returns true", function() {
+  	const result = myApp.init();
+    expect(result).toBe(true);
+  });
+});
+
+</script>
+
+
+</body>
+</html>

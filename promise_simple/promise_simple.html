@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+    /**
+     * Belofte om kamer op te ruimen, ahum
+     */
+    let slaapkamerOpruimen = new Promise(
+        function (resolve, reject) {
+            let isOpgeruimd = false;
+
+            if (isOpgeruimd) {
+                resolve('Schoon')
+            } else {
+                reject('Bweee, niet schoon')
+            }
+        })
+        .catch(function(error){
+            throw Error(error)
+        })
+
+    let woonkamerOpruimen = new Promise(
+        function (resolve, reject) {
+            let isOpgeruimd = false;
+
+            if (isOpgeruimd) {
+                resolve('Schoon')
+            } else {
+                reject('Bweee, niet schoon')
+            }
+        })
+        .catch(function(error){
+            throw Error(error)
+        })
+
+    Promise.all([slaapkamerOpruimen, woonkamerOpruimen])
+        .then(result => {
+           console.log(result)
+        })
+        .catch(e => console.log(`Catched in .all: ${e}`))
+
+
+
+</script>
+
+
+</body>
+</html>

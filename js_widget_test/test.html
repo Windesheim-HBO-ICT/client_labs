@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Weatherwidget tests</title>
+    <link rel="stylesheet" media="all" href="node_modules/mocha/mocha.css">
+</head>
+<body>
+
+<div id="mocha"><p><a href=".">Index</a></p></div>
+
+<div id="messages"></div>
+<div id="fixtures"></div>
+
+<!-- Beschikbaar maken van de libraries mocha, chai en sinon -->
+<script src="jquery.min.js"></script>
+<script src="node_modules/mocha/mocha.js"></script>
+<script src="node_modules/chai/chai.js"></script>
+<script src="node_modules/sinon/pkg/sinon-2.1.0.js"></script>
+
+<!-- Code onder test -->
+<script src="widget_module_ajax.js"></script>
+
+
+<!-- Mocha setup -->
+<script>mocha.setup('bdd')</script>
+
+<!-- Test methodes -->
+<script src="test/weatherwidget_test.js"></script>
+
+<!-- Testen uitvoeren -->
+<script>
+    $(function () {
+        mocha.run();
+    });
+
+</script>
+
+<nav>
+    <h1>Superduper.com</h1>
+    <div id="weather">
+        <div id="weather-forecast">
+            <div class="wrapper">
+                <div class="top"><img src="weather_icon.png" width="60px"></div>
+                <div class="bottom">
+                    <div class="current_day">
+                        <div class="temp">31&deg;</div>
+                        <div>Maandag</div>
+                    </div>
+                    <div class="current_day_temp">
+                        <div><img src="weather_icon.png" width="50px"></div>
+                        <div class="wind">4w / Z-ZO</div>
+                    </div>
+                    <div class="day">
+                        <div>di</div>
+                        <div><img src="weather_icon.png" width="20px"></div>
+                        <div>31&deg;</div>
+                    </div>
+                    <div class="day">
+                        <div>wo</div>
+                        <div><img src="weather_icon.png" width="20px"></div>
+                        <div>29&deg;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Welkom bij Superduper - facing your dreams</h1>
+</div>
+</body>
+</html>

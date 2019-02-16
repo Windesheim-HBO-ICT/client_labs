@@ -1,0 +1,98 @@
+<html>
+<head>
+    <link rel="shortcut icon" type="image/png" href="jasmine/lib/jasmine/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine/jasmine.css">
+    <script type="text/javascript" src="jasmine/lib/jasmine/jasmine.js"></script>
+    <script type="text/javascript" src="jasmine/lib/jasmine/jasmine-html.js"></script>
+    <script type="text/javascript" src="jasmine/lib/jasmine/boot.js"></script>
+    <script type="text/javascript" src="jasmine/lib/jasmine/mock-ajax.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+</head>
+<body>
+
+<script>
+
+    /**
+     * De functie onder test
+     */
+    const getWeather = function () {
+        return $.get('http://api.openweathermap.org/data/2.5/weather?q=Baarn&APPID=8fcf26b16c912c56bdbb840b5276b6c4');
+    }
+
+    describe("Mocking weather api request", function () {
+
+        beforeEach(function () {
+             jasmine.Ajax.install();
+        });
+
+        afterEach(function () {
+             jasmine.Ajax.uninstall();
+        });
+
+        it("should have responseText: 'abc'", function () {
+
+            let promiseGetWeather = getWeather();   //functie onder test
+            console.log(promiseGetWeather)
+
+            let request = jasmine.Ajax.requests.mostRecent();
+
+            request.respondWith({status: 'success', responseText: 'abc'});
+
+            console.log(request)
+            return expect(request.responseText).toBe('abc')
+        });
+    });
+
+    describe("Spy-ing weather api request", function () {
+
+        let onSuccess, onFailure, request;
+
+        beforeEach(function () {
+            jasmine.Ajax.install();
+
+            onSuccess = jasmine.createSpy('onSuccess');
+            onFailure = jasmine.createSpy('onFailure');
+
+            spyOn($, 'get').and.callFake(function (req) {
+                let d = $.Deferred();
+                // resolve using our mock data
+                let data = {x: 1, y: 2}
+                d.reject(data); //resolve leidt tot een succesvolle response, reject leidt tot een error.
+                return d.promise();
+            });
+
+        });
+
+        afterEach(function () {
+            jasmine.Ajax.uninstall();
+        });
+
+        describe("onSuccess", function () {
+            it("should not have called the spy onSuccess before doing the request", function () {
+                expect(onSuccess).not.toHaveBeenCalled();
+            });
+
+            it("after the request it should have called the spy onSuccess", function () {
+                getWeather()
+                    .done(function () {
+                        console.log('done!')
+                        return onSuccess();
+                    })
+                    .fail(function () {
+                        return onFailure();
+                    })
+
+                expect(onSuccess).toHaveBeenCalled();
+                expect(onFailure).not.toHaveBeenCalled();
+            });
+        })
+
+    });
+
+
+</script>
+
+
+</body>
+</html>
